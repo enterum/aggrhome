@@ -76,6 +76,11 @@ function formatDate(date: Date): string {
 
 async function loadFeeds() {
   try {
+    // Contenedor donde se generarán los feeds
+    const container = document.getElementById("feeds-container");
+    if (!container) return;
+
+    container.style.display = "none";
 
     const loading = document.getElementById("loading-container");
     if (loading) loading.style.display = "block"; // mostrar spinner
@@ -90,9 +95,6 @@ async function loadFeeds() {
       return { title, url, defaultImage };
     });
 
-    // Contenedor donde se generarán los feeds
-    const container = document.getElementById("feeds-container");
-    if (!container) return;
 
     // Limpiar solo este contenedor
     container.innerHTML = "";

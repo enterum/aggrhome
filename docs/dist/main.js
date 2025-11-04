@@ -73,6 +73,11 @@ function formatDate(date) {
 function loadFeeds() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            // Contenedor donde se generarán los feeds
+            const container = document.getElementById("feeds-container");
+            if (!container)
+                return;
+            container.style.display = "none";
             const loading = document.getElementById("loading-container");
             if (loading)
                 loading.style.display = "block"; // mostrar spinner
@@ -84,10 +89,6 @@ function loadFeeds() {
                 const [title, url, defaultImage] = line.split(",");
                 return { title, url, defaultImage };
             });
-            // Contenedor donde se generarán los feeds
-            const container = document.getElementById("feeds-container");
-            if (!container)
-                return;
             // Limpiar solo este contenedor
             container.innerHTML = "";
             const itemsPerRow = 3;
