@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./public/dist",
+    "outDir": "./docs/dist",
     "rootDir": "./src",
     "lib": ["DOM", "ES2017"],
   },

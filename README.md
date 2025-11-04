@@ -17,12 +17,20 @@ AGGRHOME es un lector de feeds RSS que muestra las portadas de los principales a
 
 ```
 AGGRHOME/
-├── public/                # Archivos estáticos: HTML, CSS, imágenes
+├── docs/                  # Archivos estáticos: HTML, CSS, etc.
+├──── css/                 # Hojas de estilo
+├──── fonts/               # Ficheros de fuentes
+├──── dist/                # Código TypeScript compilado
+├────── main.ts            # Código TypeScript compilado
+├──── index.html           # Archivo index HTML
 ├──── feeds.txt            # Lista de feeds RSS e imágenes por defecto
 ├── src/                   # Código TypeScript
+├──── main.ts              # Código TypeScript
 ├── package.json           # Dependencias y scripts
+├── package-lock.json      # Dependencias y scripts
 ├── tsconfig.json          # Configuración TypeScript
-├── README.md
+├── README.md              # README proyecto
+├── LICENSE
 └── .gitignore
 ```
 
@@ -55,7 +63,7 @@ npm run build
 npm run start
 ```
 
-- Esto abrirá `public/index.html` en tu navegador y cargará los feeds.
+- Esto abrirá `docs/index.html` en tu navegador y cargará los feeds.
 - Puedes cambiar el intervalo de refresco desde la barra de navegación.
 
 ---

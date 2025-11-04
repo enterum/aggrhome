@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "clean": "rimraf public/dist",
+  "clean": "rimraf docs/dist",
   "build": "npm run clean && tsc",
-  "serve": "live-server public --port=5500",
+  "serve": "live-server docs --port=5500",
   "start": "npm run build && npm run serve"
   },
   "keywords": [],
