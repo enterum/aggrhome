@@ -1,20 +1,22 @@
 {
   "name": "aggrhome",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "AGGRHOME 🌐 - Portadas de los principales agregadores de noticias en español",
+  "main": "dist/main.js",
   "scripts": {
-  "clean": "rimraf docs/dist",
-  "build": "npm run clean && tsc",
-  "serve": "live-server docs --port=5500",
-  "start": "npm run build && npm run serve"
+    "clean": "rimraf docs/dist",
+    "build": "npm run clean && tsc",
+    "serve": "live-server docs --port=5500",
+    "start": "npm run build && npm run serve",
+    "deploy": "npm run build && git add docs && git commit -m 'Deploy to GitHub Pages' || echo 'No changes to commit' && git push"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Enterum",
+  "license": "MIT",
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
     "@types/jquery": "^3.5.33",
+    "gh-pages": "^6.3.0",
     "live-server": "^1.2.2",
     "rimraf": "^6.1.0",
     "typescript": "^5.9.3"
