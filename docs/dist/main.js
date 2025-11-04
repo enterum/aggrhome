@@ -8,48 +8,68 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const feeds = [
-    "https://www.meneame.net/rss",
-    "https://killbait.com/feed-es.php",
-    "https://tardigram.com/rss",
-    "https://www.mediatize.info/rss"
-];
-const default_images = [
-    "https://www.meneame.net/img/mnm/logo.svg",
-    "https://killbait.com/assets/images/logo/5.png",
-    "https://tardigram.com/media/cache/resolve/post_thumb/2d/07/2d07bae7d94ca622e9ec3584a8dd3b10ba33677a2338ddd2bc7db6907860ff0e.jpg",
-    "https://www.mediatize.info/v_78/img/mdtz/logo.svg"
-];
 function extractImageFromDescription(description) {
     const imgMatch = description.match(/<img\s+src=['"]([^'"]+)['"]/);
     return imgMatch ? imgMatch[1] : "";
 }
 function getFirstItem(feedUrl_1) {
     return __awaiter(this, arguments, void 0, function* (feedUrl, useDescriptionForImage = false) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         try {
             const response = yield fetch(`https://corsproxy.io/?${encodeURIComponent(feedUrl)}`);
             const xmlText = yield response.text();
             const parser = new DOMParser();
             const xml = parser.parseFromString(xmlText, "application/xml");
-            const item = xml.querySelector("item");
-            if (!item)
+            // Los de Reddit son Atom, por lo que lo tratamos así por el momento (TODO:meter campo en feeds.txt para indicar tipo)
+            const isAtom = feedUrl.includes("reddit.com");
+            let item = null;
+            if (isAtom) {
+                // Para Atom, buscamos el primer <entry>
+                item = xml.querySelector("entry");
+            }
+            else {
+                // Si es RSS, buscamos el primer <item>
+                item = xml.querySelector("item");
+            }
+            if (!item) {
+                console.error("No se encontró el elemento <entry> o <item> en el feed.");
                 return null;
+            }
             const title = (_b = (_a = item.querySelector("title")) === null || _a === void 0 ? void 0 : _a.textContent) !== null && _b !== void 0 ? _b : "";
-            const link = (_d = (_c = item.querySelector("link")) === null || _c === void 0 ? void 0 : _c.textContent) !== null && _d !== void 0 ? _d : "";
+            // Para Atom (Reddit), revisamos todos los enlaces posibles
+            let link = "";
+            if (isAtom) {
+                link = (_d = (_c = item.querySelector("link")) === null || _c === void 0 ? void 0 : _c.getAttribute("href")) !== null && _d !== void 0 ? _d : "";
+            }
+            else {
+                // En RSS normal, buscamos el primer <link>
+                link = (_f = (_e = item.querySelector("link")) === null || _e === void 0 ? void 0 : _e.textContent) !== null && _f !== void 0 ? _f : "";
+                console.log("Link de RSS:", link); // Log de RSS
+            }
             // Imagen
             let imageUrl = "";
-            const media = item.querySelector("media\\:content, enclosure");
-            if (media)
-                imageUrl = (_e = media.getAttribute("url")) !== null && _e !== void 0 ? _e : "";
+            if (isAtom) {
+                // En Atom, la imagen puede estar en el contenido de la entrada (<content>)
+                const content = (_h = (_g = item.querySelector("content")) === null || _g === void 0 ? void 0 : _g.textContent) !== null && _h !== void 0 ? _h : "";
+                const imgMatch = content.match(/<img[^>]+src=['"]([^'"]+)['"]/);
+                if (imgMatch)
+                    imageUrl = imgMatch[1];
+            }
+            else {
+                // En RSS, buscamos la imagen en <media:content> o <enclosure>
+                const media = item.querySelector("media\\:content, enclosure");
+                if (media)
+                    imageUrl = (_j = media.getAttribute("url")) !== null && _j !== void 0 ? _j : "";
+            }
+            // Si no encontramos una imagen, tratamos de obtenerla desde la descripción (si está habilitado)
             if (!imageUrl && useDescriptionForImage) {
-                const description = (_g = (_f = item.querySelector("description")) === null || _f === void 0 ? void 0 : _f.textContent) !== null && _g !== void 0 ? _g : "";
+                const description = (_l = (_k = item.querySelector("description")) === null || _k === void 0 ? void 0 : _k.textContent) !== null && _l !== void 0 ? _l : "";
                 const match = description.match(/<img[^>]+src=['"]([^'"]+)['"]/);
                 if (match)
                     imageUrl = match[1];
             }
             // Fecha
-            const pubDateRaw = (_j = (_h = item.querySelector("pubDate")) === null || _h === void 0 ? void 0 : _h.textContent) !== null && _j !== void 0 ? _j : "";
+            const pubDateRaw = (_o = (_m = item.querySelector("pubDate")) === null || _m === void 0 ? void 0 : _m.textContent) !== null && _o !== void 0 ? _o : "";
             const pubDateObj = pubDateRaw ? new Date(pubDateRaw) : null;
             const pubDate = pubDateObj ? formatDate(pubDateObj) : "";
             return { title, link, imageUrl, pubDate };

@@ -5,25 +5,11 @@ interface FeedItem {
   pubDate: string; 
 }
 
-const feeds: string[] = [
-  "https://www.meneame.net/rss",
-  "https://killbait.com/feed-es.php",
-  "https://tardigram.com/rss",
-  "https://www.mediatize.info/rss"
-];
-
-
-const default_images: string[] = [
-  "https://www.meneame.net/img/mnm/logo.svg",
-  "https://killbait.com/assets/images/logo/5.png",
-  "https://tardigram.com/media/cache/resolve/post_thumb/2d/07/2d07bae7d94ca622e9ec3584a8dd3b10ba33677a2338ddd2bc7db6907860ff0e.jpg",
-  "https://www.mediatize.info/v_78/img/mdtz/logo.svg"
-];
-
 function extractImageFromDescription(description: string): string {
   const imgMatch = description.match(/<img\s+src=['"]([^'"]+)['"]/);
   return imgMatch ? imgMatch[1] : "";
 }
+
 
 async function getFirstItem(feedUrl: string, useDescriptionForImage = false): Promise<FeedItem | null> {
   try {
@@ -32,17 +18,52 @@ async function getFirstItem(feedUrl: string, useDescriptionForImage = false): Pr
     const parser = new DOMParser();
     const xml = parser.parseFromString(xmlText, "application/xml");
 
-    const item = xml.querySelector("item");
-    if (!item) return null;
+    // Los de Reddit son Atom, por lo que lo tratamos así por el momento (TODO:meter campo en feeds.txt para indicar tipo)
+    const isAtom = feedUrl.includes("reddit.com");
+
+    let item: Element | null = null;
+
+    if (isAtom) {
+      // Para Atom, buscamos el primer <entry>
+      item = xml.querySelector("entry");
+    } else {
+      // Si es RSS, buscamos el primer <item>
+      item = xml.querySelector("item");
+    }
+
+    if (!item) {
+      console.error("No se encontró el elemento <entry> o <item> en el feed.");
+      return null;
+    }
 
     const title = item.querySelector("title")?.textContent ?? "";
-    const link = item.querySelector("link")?.textContent ?? "";
+
+    // Para Atom (Reddit), revisamos todos los enlaces posibles
+    let link = "";
+    if (isAtom) {
+        link = item.querySelector("link")?.getAttribute("href") ?? "";
+        
+    } else {
+      // En RSS normal, buscamos el primer <link>
+      link = item.querySelector("link")?.textContent ?? "";
+      console.log("Link de RSS:", link);  // Log de RSS
+    }
+
 
     // Imagen
     let imageUrl = "";
-    const media = item.querySelector("media\\:content, enclosure") as Element | null;
-    if (media) imageUrl = media.getAttribute("url") ?? "";
+    if (isAtom) {
+      // En Atom, la imagen puede estar en el contenido de la entrada (<content>)
+      const content = item.querySelector("content")?.textContent ?? "";
+      const imgMatch = content.match(/<img[^>]+src=['"]([^'"]+)['"]/);
+      if (imgMatch) imageUrl = imgMatch[1];
+    } else {
+      // En RSS, buscamos la imagen en <media:content> o <enclosure>
+      const media = item.querySelector("media\\:content, enclosure") as Element | null;
+      if (media) imageUrl = media.getAttribute("url") ?? "";
+    }
 
+    // Si no encontramos una imagen, tratamos de obtenerla desde la descripción (si está habilitado)
     if (!imageUrl && useDescriptionForImage) {
       const description = item.querySelector("description")?.textContent ?? "";
       const match = description.match(/<img[^>]+src=['"]([^'"]+)['"]/);
@@ -60,6 +81,7 @@ async function getFirstItem(feedUrl: string, useDescriptionForImage = false): Pr
     return null;
   }
 }
+
 
 
 function formatDate(date: Date): string {
