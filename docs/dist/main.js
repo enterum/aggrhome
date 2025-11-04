@@ -73,6 +73,9 @@ function formatDate(date) {
 function loadFeeds() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const loading = document.getElementById("loading-container");
+            if (loading)
+                loading.style.display = "block"; // mostrar spinner
             // Leer feeds.txt
             const feedsTxt = yield fetch("feeds.txt").then(res => res.text());
             const lines = feedsTxt.split("\n").map(line => line.trim()).filter(line => line);
@@ -133,6 +136,10 @@ function loadFeeds() {
                 if (pubDateEl)
                     pubDateEl.textContent = feedItem.pubDate;
             });
+            // Ocultar spinner una vez cargados los feeds
+            if (loading)
+                loading.style.display = "none";
+            container.style.display = "block";
         }
         catch (error) {
             console.error("Error leyendo feeds.txt o actualizando DOM:", error);

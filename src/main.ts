@@ -76,6 +76,10 @@ function formatDate(date: Date): string {
 
 async function loadFeeds() {
   try {
+
+    const loading = document.getElementById("loading-container");
+    if (loading) loading.style.display = "block"; // mostrar spinner
+    
     // Leer feeds.txt
     const feedsTxt = await fetch("feeds.txt").then(res => res.text());
     const lines = feedsTxt.split("\n").map(line => line.trim()).filter(line => line);
@@ -150,6 +154,10 @@ async function loadFeeds() {
       }
       if (pubDateEl) pubDateEl.textContent = feedItem.pubDate;
     });
+
+    // Ocultar spinner una vez cargados los feeds
+    if (loading) loading.style.display = "none";
+    container.style.display = "block";
 
   } catch (error) {
     console.error("Error leyendo feeds.txt o actualizando DOM:", error);

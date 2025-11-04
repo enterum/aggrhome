@@ -69,7 +69,14 @@
     AGGRHOME<small> 🌐 Portadas de los principales agregadores de noticias en español</small>
   </h1>
 
-  <div id="feeds-container"></div>
+  <div style="display:none" id="feeds-container"></div>
+
+  <div id="loading-container" style="text-align:center; margin: 20px 0;">
+    <img src="img/loading.gif" alt="Cargando..." id="loading-spinner" style="width: 50px; height: 50px;">
+    <p>Cargando feeds...</p>
+  </div>
+
+
 </div>
 
 <hr>
@@ -102,11 +109,9 @@
 </script>
 
 
-      <hr>
+    <hr>
 
     <div class="container">
-
-
       <footer>
         <div class="row">
           <div class="col-lg-12">
@@ -117,7 +122,6 @@
           </div>
         </div>
       </footer>
-      
     </div><!-- /.container -->
 
     <!-- JavaScript -->
