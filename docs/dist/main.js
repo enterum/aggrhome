@@ -14,7 +14,7 @@ function extractImageFromDescription(description) {
 }
 function getFirstItem(feedUrl_1) {
     return __awaiter(this, arguments, void 0, function* (feedUrl, useDescriptionForImage = false) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
         try {
             const response = yield fetch(`https://corsproxy.io/?${encodeURIComponent(feedUrl)}`);
             const xmlText = yield response.text();
@@ -68,10 +68,21 @@ function getFirstItem(feedUrl_1) {
                 if (match)
                     imageUrl = match[1];
             }
-            // Fecha
-            const pubDateRaw = (_o = (_m = item.querySelector("pubDate")) === null || _m === void 0 ? void 0 : _m.textContent) !== null && _o !== void 0 ? _o : "";
-            const pubDateObj = pubDateRaw ? new Date(pubDateRaw) : null;
-            const pubDate = pubDateObj ? formatDate(pubDateObj) : "";
+            // Fecha de publicación
+            let pubDate = "";
+            if (isAtom) {
+                const updatedRaw = (_o = (_m = item.querySelector("updated")) === null || _m === void 0 ? void 0 : _m.textContent) !== null && _o !== void 0 ? _o : "";
+                if (updatedRaw) {
+                    const updatedDate = new Date(updatedRaw);
+                    pubDate = formatDate(updatedDate); // Asumiendo que formatDate es una función que convierte la fecha
+                }
+            }
+            else {
+                // En RSS, usamos <pubDate> si está disponible
+                const pubDateRaw = (_q = (_p = item.querySelector("pubDate")) === null || _p === void 0 ? void 0 : _p.textContent) !== null && _q !== void 0 ? _q : "";
+                const pubDateObj = pubDateRaw ? new Date(pubDateRaw) : null;
+                pubDate = pubDateObj ? formatDate(pubDateObj) : "";
+            }
             return { title, link, imageUrl, pubDate };
         }
         catch (error) {

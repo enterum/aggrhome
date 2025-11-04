@@ -3,3 +3,4 @@ KillBait,https://killbait.com/feed-es.php,https://killbait.com/assets/images/log
 Tardigram,https://tardigram.com/rss,https://tardigram.com/media/cache/resolve/post_thumb/2d/07/2d07bae7d94ca622e9ec3584a8dd3b10ba33677a2338ddd2bc7db6907860ff0e.jpg
 Mediatize,https://www.mediatize.info/rss,https://www.mediatize.info/v_78/img/mdtz/logo.svg
 Reddit r/Espana,https://www.reddit.com/r/Espana.rss,https://styles.redditmedia.com/t5_2scwl/styles/communityIcon_f8c375cadwy91.jpg?width=128&frame=1&auto=webp&s=bedcb1236f4b0bb665ec6e9938e6beb71ddde985
+Renegados,https://www.renegados.es/rss,https://www.renegados.es/renegados1.jpg

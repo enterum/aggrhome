@@ -70,10 +70,20 @@ async function getFirstItem(feedUrl: string, useDescriptionForImage = false): Pr
       if (match) imageUrl = match[1];
     }
 
-    // Fecha
-    const pubDateRaw = item.querySelector("pubDate")?.textContent ?? "";
-    const pubDateObj = pubDateRaw ? new Date(pubDateRaw) : null;
-    const pubDate = pubDateObj ? formatDate(pubDateObj) : "";
+    // Fecha de publicación
+    let pubDate = "";
+    if (isAtom) {
+      const updatedRaw = item.querySelector("updated")?.textContent ?? "";
+      if (updatedRaw) {
+        const updatedDate = new Date(updatedRaw);
+        pubDate = formatDate(updatedDate);  // Asumiendo que formatDate es una función que convierte la fecha
+      }
+    } else {
+      // En RSS, usamos <pubDate> si está disponible
+      const pubDateRaw = item.querySelector("pubDate")?.textContent ?? "";
+      const pubDateObj = pubDateRaw ? new Date(pubDateRaw) : null;
+      pubDate = pubDateObj ? formatDate(pubDateObj) : "";
+    }
 
     return { title, link, imageUrl, pubDate };
   } catch (error) {
