@@ -8,7 +8,12 @@ Desplegado en vivo: https://enterum.github.io/aggrhome/
 
 ## Funcionalidades
 
-- Lectura de feeds RSS de varios agregadores (Menéame, KillBait, Tardigram, Mediatize).
+- Lectura de feeds RSS de distintos agregadores de noticias como:
+  - [Menéame](https://www.meneame.net)
+  - [KillBait](https://killbait.com)
+  - [Tardigram](https://tardigram.com)
+  - [Mediatize](https://www.mediatize.info)
+  - ...
 - Visualización del título, enlace e imagen de la primera noticia de cada feed.
 - Selección de intervalo de actualización automática desde la barra de navegación (Nunca, 1 minuto, 5 minutos, 10 minutos, 30 minutos).  
 - Imágenes por defecto para cada agregador si no hay imagen disponible en el feed.
@@ -22,17 +27,17 @@ AGGRHOME/
 ├── docs/                  # Archivos estáticos: HTML, CSS, etc.
 ├──── css/                 # Hojas de estilo
 ├──── fonts/               # Ficheros de fuentes
-├──── dist/                # Código TypeScript compilado
+├──── dist/                
 ├────── main.ts            # Código TypeScript compilado
 ├──── index.html           # Archivo index HTML
 ├──── feeds.txt            # Lista de feeds RSS e imágenes por defecto
-├── src/                   # Código TypeScript
+├── src/                   
 ├──── main.ts              # Código TypeScript
 ├── package.json           # Dependencias y scripts
 ├── package-lock.json      # Dependencias y scripts
 ├── tsconfig.json          # Configuración TypeScript
 ├── README.md              # README proyecto
-├── LICENSE
+├── LICENSE                # LICENCIA del proyecto
 └── .gitignore
 ```
 
