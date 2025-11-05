@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,16 +35,11 @@ function getFirstItem(feedUrl_1) {
                 return null;
             }
             const title = (_b = (_a = item.querySelector("title")) === null || _a === void 0 ? void 0 : _a.textContent) !== null && _b !== void 0 ? _b : "";
-            // Para Atom (Reddit), revisamos todos los enlaces posibles
             let link = "";
-            if (isAtom) {
+            if (isAtom) // Para Atom (Reddit), revisamos todos los enlaces posibles
                 link = (_d = (_c = item.querySelector("link")) === null || _c === void 0 ? void 0 : _c.getAttribute("href")) !== null && _d !== void 0 ? _d : "";
-            }
-            else {
-                // En RSS normal, buscamos el primer <link>
+            else // En RSS normal, buscamos el primer <link>
                 link = (_f = (_e = item.querySelector("link")) === null || _e === void 0 ? void 0 : _e.textContent) !== null && _f !== void 0 ? _f : "";
-                console.log("Link de RSS:", link); // Log de RSS
-            }
             // Imagen
             let imageUrl = "";
             if (isAtom) {
@@ -183,17 +177,22 @@ function loadFeeds() {
                 const imgEl = container.querySelector("img");
                 const titleEl = container.querySelector("p a");
                 const pubDateEl = container.querySelector("p.pubdate");
-                const finalImage = feedItem.imageUrl || feedsWithImages[index].defaultImage;
-                if (linkEl)
-                    linkEl.href = feedItem.link;
-                if (imgEl)
-                    imgEl.src = finalImage;
-                if (titleEl) {
-                    titleEl.textContent = feedItem.title;
-                    titleEl.href = feedItem.link;
-                }
-                if (pubDateEl)
-                    pubDateEl.textContent = feedItem.pubDate;
+                let finalImage = feedsWithImages[index].defaultImage;
+                validarImagen(feedItem.imageUrl).then(esValida => {
+                    finalImage = esValida
+                        ? feedItem.imageUrl
+                        : feedsWithImages[index].defaultImage;
+                    if (linkEl)
+                        linkEl.href = feedItem.link;
+                    if (imgEl)
+                        imgEl.src = finalImage;
+                    if (titleEl) {
+                        titleEl.textContent = feedItem.title;
+                        titleEl.href = feedItem.link;
+                    }
+                    if (pubDateEl)
+                        pubDateEl.textContent = feedItem.pubDate;
+                });
                 // Nueva funcionalidad 05/11/2025: Mostrar histórico:
                 const h3El = container.querySelector("h3");
                 if (h3El) {
@@ -285,6 +284,14 @@ function loadFeeds() {
         catch (error) {
             console.error("Error leyendo feeds.txt o actualizando DOM:", error);
         }
+    });
+}
+export function validarImagen(url) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = `${url}?_=${Date.now()}`;
     });
 }
 document.addEventListener("DOMContentLoaded", () => {

@@ -38,16 +38,12 @@ async function getFirstItem(feedUrl: string, useDescriptionForImage = false): Pr
 
     const title = item.querySelector("title")?.textContent ?? "";
 
-    // Para Atom (Reddit), revisamos todos los enlaces posibles
+    
     let link = "";
-    if (isAtom) {
-        link = item.querySelector("link")?.getAttribute("href") ?? "";
-        
-    } else {
-      // En RSS normal, buscamos el primer <link>
+    if (isAtom) // Para Atom (Reddit), revisamos todos los enlaces posibles
+      link = item.querySelector("link")?.getAttribute("href") ?? "";
+    else // En RSS normal, buscamos el primer <link>
       link = item.querySelector("link")?.textContent ?? "";
-      console.log("Link de RSS:", link);  // Log de RSS
-    }
 
 
     // Imagen
@@ -211,16 +207,21 @@ async function loadFeeds() {
       const titleEl = container.querySelector("p a") as HTMLAnchorElement;
       const pubDateEl = container.querySelector("p.pubdate") as HTMLParagraphElement;
 
-      const finalImage = feedItem.imageUrl || feedsWithImages[index].defaultImage ;
+      let finalImage = feedsWithImages[index].defaultImage;
 
-      if (linkEl) linkEl.href = feedItem.link;
-      if (imgEl) imgEl.src = finalImage;
-      if (titleEl) {
-        titleEl.textContent = feedItem.title;
-        titleEl.href = feedItem.link;
-      }
-      if (pubDateEl) pubDateEl.textContent = feedItem.pubDate;
-
+      validarImagen(feedItem.imageUrl).then(esValida => {
+        finalImage = esValida
+          ? feedItem.imageUrl
+          : feedsWithImages[index].defaultImage;
+      
+        if (linkEl) linkEl.href = feedItem.link;
+        if (imgEl) imgEl.src = finalImage;
+        if (titleEl) {
+          titleEl.textContent = feedItem.title;
+          titleEl.href = feedItem.link;
+        }
+        if (pubDateEl) pubDateEl.textContent = feedItem.pubDate;
+      });
 
  // Nueva funcionalidad 05/11/2025: Mostrar histórico:
  const h3El = container.querySelector("h3");
@@ -334,6 +335,15 @@ async function loadFeeds() {
   }
 }
 
+
+export function validarImagen(url: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = `${url}?_=${Date.now()}`;
+  });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   loadFeeds();
