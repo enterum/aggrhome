@@ -45,7 +45,7 @@ AGGRHOME/
 
 ## Registro de cambios importantes
 
-- 2025-04-12 - Se añade histórico de noticias por cada feed
+- 2025-04-12 - Se añade histórico de noticias por cada feed: Al ser un proyecto sin backend, el historial se guarda en el localStorage del navegador. Eso quiere decir que solo aparecerán en el historial las noticias que hayan ido apareciendo por cada feed mientras la aplicación se ha estado ejecutando en el navegador del usuario.
 - 2025-04-11 - Versión inicial
 
 ---
