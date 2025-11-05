@@ -202,6 +202,7 @@ async function loadFeeds() {
     items.forEach((feedItem, index) => {
       if (!feedItem) return;
 
+      const feed = feedsWithImages[index];
       const container = document.querySelector(`.portfolio-item[data-feed="${index}"]`);
       if (!container) return;
 
@@ -253,6 +254,14 @@ async function loadFeeds() {
        const filtered = storedData.filter(item => item.host === host);
 
        filtered.sort((a, b) => (a.pubDate < b.pubDate ? 1 : a.pubDate > b.pubDate ? -1 : 0));
+
+
+       // Título centrado
+        const h3 = document.createElement("h3");
+        h3.textContent = `Historial de noticias de ${feed.title} hasta el momento:`; 
+        h3.style.textAlign = "center";
+        h3.style.marginBottom = "20px"; // opcional para separar de la tabla
+        historyContainer.appendChild(h3);
 
        const table = document.createElement("table");
        table.style.width = "100%";
