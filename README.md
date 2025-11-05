@@ -43,6 +43,13 @@ AGGRHOME/
 
 ---
 
+## Registro de cambios importantes
+
+- 2025-04-12 - Se añade histórico de noticias por cada feed
+- 2025-04-11 - Versión inicial
+
+---
+
 ## Uso
 
 1. Clonar el repositorio:

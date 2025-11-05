@@ -83,6 +83,31 @@ function getFirstItem(feedUrl_1) {
                 const pubDateObj = pubDateRaw ? new Date(pubDateRaw) : null;
                 pubDate = pubDateObj ? formatDate(pubDateObj) : "";
             }
+            if (link) {
+                try {
+                    const urlObj = new URL(link);
+                    const host = urlObj.host;
+                    const storedDataJson = localStorage.getItem("feedsHistory");
+                    let storedData = storedDataJson ? JSON.parse(storedDataJson) : [];
+                    const exists = storedData.some(item => item.link === link);
+                    if (!exists) {
+                        if (!imageUrl) {
+                            const feedsTxt = yield fetch("feeds.txt").then(res => res.text());
+                            const lines = feedsTxt.split("\n").map(line => line.trim()).filter(line => line);
+                            const feedDefault = lines.find(line => line.includes(feedUrl));
+                            if (feedDefault) {
+                                const parts = feedDefault.split(",");
+                                imageUrl = parts[2] || ""; // la tercera columna es la imagen por defecto
+                            }
+                        }
+                        storedData.push({ host, title, link, imageUrl, pubDate });
+                        localStorage.setItem("feedsHistory", JSON.stringify(storedData));
+                    }
+                }
+                catch (err) {
+                    console.error("Error guardando feedsHistory en localStorage:", err);
+                }
+            }
             return { title, link, imageUrl, pubDate };
         }
         catch (error) {
@@ -99,7 +124,7 @@ function formatDate(date) {
     const hours = pad(date.getHours());
     const minutes = pad(date.getMinutes());
     const seconds = pad(date.getSeconds());
-    return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 function loadFeeds() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -147,6 +172,7 @@ function loadFeeds() {
             const items = yield Promise.all(feedsWithImages.map((feed, idx) => getFirstItem(feed.url, descriptionImageFlags[idx])));
             // Actualizar contenido de cada feed
             items.forEach((feedItem, index) => {
+                var _a;
                 if (!feedItem)
                     return;
                 const container = document.querySelector(`.portfolio-item[data-feed="${index}"]`);
@@ -167,6 +193,80 @@ function loadFeeds() {
                 }
                 if (pubDateEl)
                     pubDateEl.textContent = feedItem.pubDate;
+                // Nueva funcionalidad 05/11/2025: Mostrar histórico:
+                const h3El = container.querySelector("h3");
+                if (h3El) {
+                    const emoji = ((_a = h3El.textContent) === null || _a === void 0 ? void 0 : _a.includes("🕒")) ? h3El.querySelector("span") : null;
+                    let emojiEl;
+                    if (!emoji) {
+                        emojiEl = document.createElement("span");
+                        emojiEl.style.cursor = "pointer";
+                        emojiEl.style.marginLeft = "5px";
+                        emojiEl.textContent = "🕒";
+                        h3El.appendChild(emojiEl);
+                    }
+                    else {
+                        emojiEl = emoji;
+                    }
+                    emojiEl.addEventListener("click", () => {
+                        const historyContainer = document.getElementById("history-container");
+                        if (!historyContainer)
+                            return;
+                        // Limpiar contenido previo
+                        historyContainer.innerHTML = "";
+                        try {
+                            const storedDataJson = localStorage.getItem("feedsHistory");
+                            let storedData = storedDataJson ? JSON.parse(storedDataJson) : [];
+                            const urlObj = new URL(feedItem.link);
+                            const host = urlObj.host;
+                            const filtered = storedData.filter(item => item.host === host);
+                            filtered.sort((a, b) => (a.pubDate < b.pubDate ? 1 : a.pubDate > b.pubDate ? -1 : 0));
+                            const table = document.createElement("table");
+                            table.style.width = "100%";
+                            table.style.borderCollapse = "collapse";
+                            filtered.forEach(item => {
+                                const tr = document.createElement("tr");
+                                tr.style.borderBottom = "1px solid #ccc";
+                                tr.style.padding = "5px";
+                                tr.style.paddingBottom = "10px";
+                                const tdImg = document.createElement("td");
+                                tdImg.style.width = "100px";
+                                const img = document.createElement("img");
+                                img.src = item.imageUrl;
+                                img.style.maxHeight = "100px";
+                                img.style.width = "100%";
+                                img.style.height = "100px";
+                                img.style.objectFit = "cover";
+                                img.style.borderRadius = "12px";
+                                img.style.display = "block";
+                                img.style.border = "1px solid #ddd";
+                                img.style.marginRight = "20px";
+                                tdImg.appendChild(img);
+                                const tdTitle = document.createElement("td");
+                                tdTitle.style.paddingLeft = "20px";
+                                const a = document.createElement("a");
+                                a.href = item.link;
+                                a.target = "_blank";
+                                a.style.fontSize = "17px";
+                                a.textContent = item.title;
+                                tdTitle.appendChild(a);
+                                const tdDate = document.createElement("td");
+                                tdDate.textContent = item.pubDate;
+                                tr.appendChild(tdImg);
+                                tr.appendChild(tdTitle);
+                                tr.appendChild(tdDate);
+                                table.appendChild(tr);
+                            });
+                            historyContainer.appendChild(table);
+                            historyContainer.style.display = "block";
+                            // Hacer scroll hacia el historial
+                            //historyContainer.scrollIntoView({ behavior: "smooth" });
+                        }
+                        catch (err) {
+                            console.error("Error mostrando historial:", err);
+                        }
+                    });
+                }
             });
             // Ocultar spinner una vez cargados los feeds
             if (loading)

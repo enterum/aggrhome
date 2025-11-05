@@ -28,3 +28,10 @@ footer {
   font-style: italic;
 }
 
+#history-container table tr:nth-child(even) {
+  background-color: #ffffff; /* filas pares */
+}
+
+#history-container table tr:nth-child(odd) {
+  background-color: #f9f9f9; /* filas impares */
+}
