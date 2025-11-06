@@ -15,13 +15,14 @@ async function getFirstItem(feedUrl: string, useDescriptionForImage = false): Pr
   try {
     const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(feedUrl)}`, { cache: "no-store" });
 
-    //console.log("feedUrl.=" + feedUrl);
-    //console.log("response.ok=" + response.ok + " - response.status=" + response.status);
+    console.log("feedUrl.=" + feedUrl);
+
+    console.log("response.ok=" + response.ok + " - response.status=" + response.status);
 
     // Si recibimos 429 u otro error HTTP, ignoramos este feed
     if (!response.ok) {
-      if (response.status != 200) {
-        console.warn(`Feed ignorado error ${response.status}: ${feedUrl}`);
+      if (response.status === 429) {
+        console.warn(`Feed ignorado por límite de peticiones: ${feedUrl}`);
         return null; // retornamos null para que no se renderice
       }
       throw new Error(`Error HTTP ${response.status}`);
@@ -222,18 +223,11 @@ async function loadFeeds() {
 
     // Actualizar contenido de cada feed
     items.forEach((feedItem, index) => {
-      const container = document.querySelector(`.portfolio-item[data-feed="${index}"]`);
-      if (!container) return;
-
-      if (!feedItem)   // si la lectura del feed ha dado !=200 se elimina del div correspondiente para que no renderize
-      {
-        if (container && container.parentElement) {
-          container.parentElement.removeChild(container);
-        }
-        return; 
-      }
+      if (!feedItem) return;
 
       const feed = feedsWithImages[index];
+      const container = document.querySelector(`.portfolio-item[data-feed="${index}"]`);
+      if (!container) return;
 
       const linkEl = container.querySelector("a") as HTMLAnchorElement;
       const imgEl = container.querySelector("img") as HTMLImageElement;
