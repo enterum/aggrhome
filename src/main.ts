@@ -13,7 +13,7 @@ function extractImageFromDescription(description: string): string {
 
 async function getFirstItem(feedUrl: string, useDescriptionForImage = false): Promise<FeedItem | null> {
   try {
-    const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(feedUrl)}`, { cache: "no-store" });
+    const response = await fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(feedUrl)}`, { cache: "no-store" });
 
     //console.log("feedUrl.=" + feedUrl);
     //console.log("response.ok=" + response.ok + " - response.status=" + response.status);
@@ -433,7 +433,7 @@ async function saveHistorial(useDescriptionForImage = false, maxConcurrent = 5) 
 
           (async () => {
             try {
-              const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(feed.url)}`, { cache: "no-store" });
+              const response = await fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(feed.url)}`, { cache: "no-store" });
               const xmlText = await response.text();
               const parser = new DOMParser();
               const xml = parser.parseFromString(xmlText, "application/xml");
@@ -558,3 +558,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs: number = 3000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, { ...options, signal: controller.signal });
+    return response;
+  } finally {
+    clearTimeout(id);
+  }
+}

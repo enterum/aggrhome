@@ -15,7 +15,7 @@ function getFirstItem(feedUrl_1) {
     return __awaiter(this, arguments, void 0, function* (feedUrl, useDescriptionForImage = false) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
         try {
-            const response = yield fetch(`https://corsproxy.io/?${encodeURIComponent(feedUrl)}`, { cache: "no-store" });
+            const response = yield fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(feedUrl)}`, { cache: "no-store" });
             //console.log("feedUrl.=" + feedUrl);
             //console.log("response.ok=" + response.ok + " - response.status=" + response.status);
             // Si recibimos 429 u otro error HTTP, ignoramos este feed
@@ -367,7 +367,7 @@ function saveHistorial() {
                         (() => __awaiter(this, void 0, void 0, function* () {
                             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
                             try {
-                                const response = yield fetch(`https://corsproxy.io/?${encodeURIComponent(feed.url)}`, { cache: "no-store" });
+                                const response = yield fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(feed.url)}`, { cache: "no-store" });
                                 const xmlText = yield response.text();
                                 const parser = new DOMParser();
                                 const xml = parser.parseFromString(xmlText, "application/xml");
@@ -485,3 +485,16 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("No se encontró el select de refresco");
     }
 });
+function fetchWithTimeout(url_1) {
+    return __awaiter(this, arguments, void 0, function* (url, options = {}, timeoutMs = 3000) {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeoutMs);
+        try {
+            const response = yield fetch(url, Object.assign(Object.assign({}, options), { signal: controller.signal }));
+            return response;
+        }
+        finally {
+            clearTimeout(id);
+        }
+    });
+}
