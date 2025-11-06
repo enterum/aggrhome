@@ -215,10 +215,36 @@ function loadFeeds() {
                         emojiEl.style.cursor = "pointer";
                         emojiEl.style.marginLeft = "5px";
                         emojiEl.textContent = "🕒";
+                        emojiEl.title = "Ver historial de noticias";
                         h3El.appendChild(emojiEl);
                     }
                     else {
                         emojiEl = emoji;
+                    }
+                    // NUEVO: Emoji de compartir 🔗
+                    let emojiShare = h3El.querySelector(".share");
+                    if (!emojiShare) {
+                        emojiShare = document.createElement("span");
+                        emojiShare.className = "share";
+                        emojiShare.style.cursor = "pointer";
+                        emojiShare.style.marginLeft = "5px";
+                        emojiShare.textContent = "🔗";
+                        emojiShare.title = "Compartir esta noticia";
+                        h3El.appendChild(emojiShare);
+                        // Evento de click del compartir
+                        emojiShare.addEventListener("click", () => {
+                            if (!navigator.share) {
+                                alert("Tu navegador no soporta compartir");
+                                return;
+                            }
+                            navigator.share({
+                                title: feed.title, // nombre del feed
+                                text: feedItem.title, // titular de la noticia
+                                url: feedItem.link, // url de la noticia
+                            })
+                                .then(() => console.log('Compartido con éxito'))
+                                .catch((error) => console.log('Error al compartir', error));
+                        });
                     }
                     emojiEl.addEventListener("click", () => {
                         const historyContainer = document.getElementById("history-container");
