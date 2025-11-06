@@ -15,10 +15,13 @@ async function getFirstItem(feedUrl: string, useDescriptionForImage = false): Pr
   try {
     const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(feedUrl)}`, { cache: "no-store" });
 
+    //console.log("feedUrl.=" + feedUrl);
+    //console.log("response.ok=" + response.ok + " - response.status=" + response.status);
+
     // Si recibimos 429 u otro error HTTP, ignoramos este feed
     if (!response.ok) {
-      if (response.status === 429) {
-        console.warn(`Feed ignorado por límite de peticiones: ${feedUrl}`);
+      if (response.status != 200) {
+        console.warn(`Feed ignorado error ${response.status}: ${feedUrl}`);
         return null; // retornamos null para que no se renderice
       }
       throw new Error(`Error HTTP ${response.status}`);
@@ -514,13 +517,7 @@ export function validarImagen(url: string): Promise<boolean> {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadFeeds();
 
-  const dt = new Date();
-  const footer = document.getElementById("getCurrentDate");
-  if (footer) footer.textContent = dt.getFullYear().toString();
-});
 
 let refreshIntervalId: number | undefined;
 
@@ -544,17 +541,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (footer) footer.textContent = dt.getFullYear().toString();
 
   const select = document.getElementById("refreshSelect") as HTMLSelectElement;
-  if (!select) {
-    console.error("No se encontró el select de refresco");
-    return;
-  }
-
-  // valor por defecto
-  select.value = "300000"; // 5 minutos
-  startAutoRefresh(Number(select.value));
-
-  select.addEventListener("change", () => {
+  if (select) {
+    select.value = "300000"; // 5 minutos
     startAutoRefresh(Number(select.value));
-  });
+
+    select.addEventListener("change", () => {
+      startAutoRefresh(Number(select.value));
+    });
+  } else {
+    console.error("No se encontró el select de refresco");
+  }
 });
 
