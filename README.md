@@ -19,6 +19,7 @@ Desplegado en vivo: https://enterum.github.io/aggrhome/
 - Imágenes por defecto para cada agregador si no hay imagen disponible en el feed.
 - Histórico de noticias por cada feed.
 - Compartir noticias.
+- Se pueden realizar comentarios sobre cada agregador de noticias.
 
 ---
 

@@ -1,5 +1,5 @@
 Menéame,https://www.meneame.net/rss,https://www.meneame.net/img/mnm/logo.svg
-KillBait,https://killbait.com/feed-es.php,https://killbait.com/assets/images/logo/5.png
+KillBait,https://cdn.killbait.com/static/feeds/en.rss,https://killbait.com/assets/images/logo/5.png
 Tardigram,https://tardigram.com/rss,https://tardigram.com/media/cache/resolve/post_thumb/2d/07/2d07bae7d94ca622e9ec3584a8dd3b10ba33677a2338ddd2bc7db6907860ff0e.jpg
 Mediatize,https://www.mediatize.info/rss,https://www.mediatize.info/v_78/img/mdtz/logo.svg
 r/noticias_en_espanol,https://www.reddit.com/r/noticias_en_espanol/new.rss,https://www.divxland.org/wp-content/uploads/2025/04/reddit-thumbnail.png
