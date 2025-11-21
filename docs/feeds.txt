@@ -12,9 +12,12 @@ El Diario,https://www.eldiario.es/rss/,https://www.eldiario.es/assets/img/svg/lo
 Diario ABC,https://www.abc.es/rss/2.0/portada/,https://media.licdn.com/dms/image/v2/C4E1BAQGTNEd8bcFz0w/company-background_10000/company-background_10000/0/1612187827634/diario_abc_cover?e=2147483647&v=beta&t=nhJ5zQqlTMw6M-90Y6SPKxLkWw10PBqlXnTABnn8x-Q,rss,false,PON,ES,es  
 La Vanguardia,https://www.lavanguardia.com/rss/home.xml,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/La_Vanguardia_%28cabecera%29.svg/2560px-La_Vanguardia_%28cabecera%29.svg.png,rss,false,PON,ES,es  
 El Confidencial,https://rss.elconfidencial.com/espana,https://www.ecestaticos.com/file/0be042580f4f0f53813bd70f7984033c/1456834011.svg,atom,false,PON,ES,es  
+La Marea,https://www.lamarea.com/rss,https://www.lamarea.com/wp-content/uploads/2024/10/logo-la_marea.svg,PON,ES,es
 
 The New York Times,https://rss.nytimes.com/services/xml/rss/nyt/World.xml,https://ropercenter.cornell.edu/sites/default/files/styles/600x/public/Images/New-York-Times-Logo8x6_0.png?itok=6IaMjMpQ,rss,false,PON,US,en  
 The Washington Post,https://feeds.washingtonpost.com/rss/world,https://www.akamai.com/site/es/images/logo/2019/washington-post-logo.svg,rss,false,PON,US,en  
 Los Angeles Times,https://www.latimes.com/world-nation/rss2.0.xml,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI0qzS2LtKHYXpwh_4cPyHIKUnwbXpNVd54Q&s,rss,false,PON,US,en  
 
 Jot Down,https://www.jotdown.es/feed/,https://www.jotdown.es/wp-content/uploads/2022/07/cropped-logoJD-e1658471614636.png,rss,false,REV,ES,es
+Revista Mercurio,https://www.revistamercurio.es/feed,https://www.revistamercurio.es/wp-content/uploads/2019/12/Cabeceras-1.png,rss,false,REV,ES,es
+
