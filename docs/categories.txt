@@ -1,6 +1,6 @@
-AGR|Agregadores de noticias|Portadas de los principales agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|ES|España|es|Español
-AGR|News Aggregators|Front pages of the main news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|US|United States|en|English
-AGR|News Aggregators|Front pages of the main language news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|UK|United Kingdom|en|English
+AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|ES|España|es|Español
+AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|US|United States|en|English
+AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|UK|United Kingdom|en|English
 
 PON|Prensa online|Principales diarios online en español|Vota cada medio pensando en la calidad y relevancia de sus noticias: El número de votos determinará el orden en el listado.|ES|España|es|Español
 PON|Online Press|Main online newspapers|Vote for each outlet based on the quality and relevance of their news: The number of votes will determine the order in the list.|US|United States|en|English
