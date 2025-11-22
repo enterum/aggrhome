@@ -21,3 +21,5 @@ Los Angeles Times,https://www.latimes.com/world-nation/rss2.0.xml,https://en
 Jot Down,https://www.jotdown.es/feed/,https://www.jotdown.es/wp-content/uploads/2022/07/cropped-logoJD-e1658471614636.png,rss,false,REV,ES,es
 Revista Mercurio,https://www.revistamercurio.es/feed,https://www.revistamercurio.es/wp-content/uploads/2019/12/Cabeceras-1.png,rss,false,REV,ES,es
 
+TechCrunch,https://techcrunch.com/feed/,https://techcrunch.com/wp-content/uploads/2024/10/desktop-logo.svg,rss,false,TEC,US,en
+Gizmodo,https://es.gizmodo.com/feed,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbpwLx1Cngg14caKIDEIenxvsW2cxXbv0ZOg&s,rss,false,TEC,ES,es
