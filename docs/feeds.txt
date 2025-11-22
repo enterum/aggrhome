@@ -5,6 +5,7 @@ Mediatize,https://www.mediatize.info/rss,https://enterum.github.io/aggrhome/img/
 Renegados,https://repostea.renegados.es/rss/published,https://enterum.github.io/aggrhome/img/renegados.jpg,rss,false,AGR,ES,es
 Limonatic,https://limonatic.com/rss/portada.xml,https://enterum.github.io/aggrhome/img/limonatic.png,rss,false,AGR,ES,es
 KillBait,https://killbaitnews.github.io/rssfeeds/en.rss,https://enterum.github.io/aggrhome/img/killbait.png,rss,false,AGR,ES,en
+Yups,https://yups.io/rss,https://yups.io/mbin_logo.svg,rss,false,AGR,ES,en
 
 El País,https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/ultimas-noticias/portada,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiFrjQs1yATE2Dmr7oWN6GSqsSFv1Av0_9aA&s,rss,false,PON,ES,es
 El Mundo,https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTegaOtDwGJTf3Z2kBTNiUo0A7TrzlEssKRA&s,rss,false,PON,ES,es  
