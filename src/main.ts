@@ -133,7 +133,7 @@ async function loadFeeds() {
 
     let votesData: Array<{ feed: string; votes: number }> = [];
     try {
-      const votesResponse = await fetch("https://enterum.alwaysdata.net/getvotes.php?nocache=" + Date.now(), {
+       const votesResponse = await fetch(`https://enterum.alwaysdata.net/getvotes.phpp?language=${encodeURIComponent(selectedLanguage)}&cat=${encodeURIComponent(selectedCategory)}&country=${encodeURIComponent(selectedCountry)}&nocache=` + Date.now(), {
         cache: "no-store"
       });
       if (votesResponse.ok) {

@@ -97,7 +97,7 @@ function loadFeeds() {
             const lines = feedsTxt.split("\n").map(line => line.trim()).filter(line => line);
             let votesData = [];
             try {
-                const votesResponse = yield fetch("https://enterum.alwaysdata.net/getvotes.php?nocache=" + Date.now(), {
+                const votesResponse = yield fetch(`https://enterum.alwaysdata.net/getvotes.phpp?language=${encodeURIComponent(selectedLanguage)}&cat=${encodeURIComponent(selectedCategory)}&country=${encodeURIComponent(selectedCountry)}&nocache=` + Date.now(), {
                     cache: "no-store"
                 });
                 if (votesResponse.ok) {
