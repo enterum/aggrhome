@@ -24,3 +24,4 @@ Revista Mercurio,https://www.revistamercurio.es/feed,https://www.revistamercurio
 
 TechCrunch,https://techcrunch.com/feed/,https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/TechCrunch_logo.svg/1200px-TechCrunch_logo.svg.png,rss,false,TEC,US,en
 Gizmodo,https://es.gizmodo.com/feed,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbpwLx1Cngg14caKIDEIenxvsW2cxXbv0ZOg&s,rss,false,TEC,ES,es
+Microsiervos,https://www.microsiervos.com/index.xml,https://img.microsiervos.com/blog/logo-microsiervos-2020.png,rss,false,TEC,ES,es
