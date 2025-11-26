@@ -124,7 +124,7 @@ Solo tienes que escribir la URL del feed, completar el captcha y pulsar "Añadir
 
 ## Forks
 
-(free-for-dev)[https://free-for-dev.rebuscando.info/] - Descubre, compara y sigue las mejores herramientas gratuitas para desarrolladores en un solo lugar. Nuestro directorio reúne servicios de software con planes gratuitos —organizados por categoría, caso de uso y stack tecnológico— para que encuentres exactamente lo que necesitas sin perder tiempo buscando.
+[free-for-dev](https://free-for-dev.rebuscando.info/) - Descubre, compara y sigue las mejores herramientas gratuitas para desarrolladores en un solo lugar. Nuestro directorio reúne servicios de software con planes gratuitos —organizados por categoría, caso de uso y stack tecnológico— para que encuentres exactamente lo que necesitas sin perder tiempo buscando.
 
 
 ---
