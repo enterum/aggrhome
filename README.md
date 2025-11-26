@@ -123,6 +123,13 @@ Just enter the feed URL, complete the captcha, and click **"Add feed"**. The sel
 
 ------------------------------------------------------------------------
 
+
+## Forks
+
+(free-for-dev)[https://free-for-dev.rebuscando.info/] - Discover, compare, and track the best free developer tools in one place. Our directory brings together software services with free tiers—organized by category, use case, and tech stack—so you can find exactly what you need without wasting time searching.
+
+---
+
 ## License
 
 This project is released under the **MIT License**. You are free to use
