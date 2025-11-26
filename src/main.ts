@@ -785,6 +785,48 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
+    //Collapsable menu
+    const navbarCollapse = document.querySelector(".navbar-ex1-collapse");
+
+    function closeNavbar() {
+      if (navbarCollapse && navbarCollapse.classList.contains("in")) {
+        const toggleButton = document.querySelector(".navbar-toggle") as HTMLButtonElement | null;;
+        if (toggleButton) toggleButton.click();
+      }
+    }
+
+    const navLinks = document.querySelectorAll(".navbar-ex1-collapse a");
+    navLinks.forEach(link => {
+      link.addEventListener("click", closeNavbar);
+    });
+
+    const categorySelect = document.getElementById("categorySelect") as HTMLSelectElement | null;
+    categorySelect?.addEventListener("change", () => {
+      closeNavbar();
+      window.scrollTo({ top: 0, behavior: "smooth" }); 
+    });
+
+    const countrySelect = document.getElementById("countrySelect") as HTMLSelectElement | null;
+    countrySelect?.addEventListener("change", () => {
+      closeNavbar();
+      window.scrollTo({ top: 0, behavior: "smooth" }); 
+    });
+
+    /* no hace falta:
+    const languageSelect = document.getElementById("languageSelect") as HTMLSelectElement | null;
+    languageSelect?.addEventListener("change", () => {
+      closeNavbar();
+      window.scrollTo({ top: 0, behavior: "smooth" }); 
+    });
+
+    const refreshSelect = document.getElementById("refreshSelect") as HTMLSelectElement | null;
+    refreshSelect?.addEventListener("change", () => {
+      closeNavbar();
+      window.scrollTo({ top: 0, behavior: "smooth" }); 
+    });
+    */
+
+
 
 });
 

@@ -660,6 +660,40 @@ document.addEventListener("DOMContentLoaded", () => {
             submitBtn.disabled = false;
         }
     }));
+    //Collapsable menu
+    const navbarCollapse = document.querySelector(".navbar-ex1-collapse");
+    function closeNavbar() {
+        if (navbarCollapse && navbarCollapse.classList.contains("in")) {
+            const toggleButton = document.querySelector(".navbar-toggle");
+            ;
+            if (toggleButton)
+                toggleButton.click();
+        }
+    }
+    const navLinks = document.querySelectorAll(".navbar-ex1-collapse a");
+    navLinks.forEach(link => {
+        link.addEventListener("click", closeNavbar);
+    });
+    const categorySelect = document.getElementById("categorySelect");
+    categorySelect === null || categorySelect === void 0 ? void 0 : categorySelect.addEventListener("change", () => {
+        closeNavbar();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    const countrySelect = document.getElementById("countrySelect");
+    countrySelect === null || countrySelect === void 0 ? void 0 : countrySelect.addEventListener("change", () => {
+        closeNavbar();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    const languageSelect = document.getElementById("languageSelect");
+    languageSelect === null || languageSelect === void 0 ? void 0 : languageSelect.addEventListener("change", () => {
+        closeNavbar();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    const refreshSelect = document.getElementById("refreshSelect");
+    refreshSelect === null || refreshSelect === void 0 ? void 0 : refreshSelect.addEventListener("change", () => {
+        closeNavbar();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
 });
 function fetchWithTimeout(url_1) {
     return __awaiter(this, arguments, void 0, function* (url, options = {}, timeoutMs = 3000) {
