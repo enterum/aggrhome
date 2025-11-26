@@ -684,16 +684,19 @@ document.addEventListener("DOMContentLoaded", () => {
         closeNavbar();
         window.scrollTo({ top: 0, behavior: "smooth" });
     });
-    const languageSelect = document.getElementById("languageSelect");
-    languageSelect === null || languageSelect === void 0 ? void 0 : languageSelect.addEventListener("change", () => {
-        closeNavbar();
-        window.scrollTo({ top: 0, behavior: "smooth" });
+    /* no hace falta:
+    const languageSelect = document.getElementById("languageSelect") as HTMLSelectElement | null;
+    languageSelect?.addEventListener("change", () => {
+      closeNavbar();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
-    const refreshSelect = document.getElementById("refreshSelect");
-    refreshSelect === null || refreshSelect === void 0 ? void 0 : refreshSelect.addEventListener("change", () => {
-        closeNavbar();
-        window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const refreshSelect = document.getElementById("refreshSelect") as HTMLSelectElement | null;
+    refreshSelect?.addEventListener("change", () => {
+      closeNavbar();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
+    */
 });
 function fetchWithTimeout(url_1) {
     return __awaiter(this, arguments, void 0, function* (url, options = {}, timeoutMs = 3000) {
