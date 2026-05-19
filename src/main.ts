@@ -13,8 +13,8 @@ interface FeedHistoryItem {
   title: string;
   imageUrl: string;
   pubDate: string;
-  type: string; // RSS o ATOM
-  fromDescription?: boolean; // indica si la imagen viene de <description>
+  type: string; // RSS, ATOM o SITEMAP
+  fromDescription?: boolean;
 }
 
 
@@ -35,69 +35,179 @@ let allCategories: CategoryData[] = [];
 
 let firstLoad = true; 
 
-async function getFirstItem(feedUrl: string, type: string, useDescriptionForImage = false): Promise<FeedItem | null> {
-  try {
-    const response = await fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(feedUrl)}`, { cache: "no-store" });
-    const isAtom = type === "atom";
+function getText(el: Element | null | undefined): string {
+  return el?.textContent?.trim() ?? "";
+}
 
-    
+function getNamespacedText(parent: Element, localName: string): string {
+  const node = parent.getElementsByTagNameNS("*", localName)[0];
+  return node?.textContent?.trim() ?? "";
+}
+
+function extractImageFromHtml(html: string): string {
+  const match = html.match(/<img[^>]+src=['"]([^'"]+)['"]/i);
+  return match ? match[1] : "";
+}
+
+function parseFeedItem(
+  item: Element,
+  type: string,
+  useDescriptionForImage: boolean,
+  defaultImage: string = ""
+): FeedItem | null {
+
+  const isAtom = type === "atom";
+  const isSitemap = type === "sitemap";
+
+  let title = "";
+  let link = "";
+  let imageUrl = "";
+  let pubDate = "";
+
+  // TITLE
+  if (isSitemap) {
+    title = getNamespacedText(item, "title");
+  } else {
+    title = getText(item.querySelector("title"));
+  }
+
+  // LINK
+  if (isAtom) {
+    link = item.querySelector("link")?.getAttribute("href") ?? "";
+  } else if (isSitemap) {
+    link = getText(item.querySelector("loc"));
+  } else {
+    link = getText(item.querySelector("link"));
+  }
+
+  // IMAGE
+  if (isAtom) {
+    const content = getText(item.querySelector("content"));
+    imageUrl = extractImageFromHtml(content);
+
+  } else if (isSitemap) {
+
+    // Los news sitemap normalmente NO traen imágenes
+    imageUrl = defaultImage;
+
+  } else {
+
+    const media = item.querySelector("media\\:content, enclosure") as Element | null;
+
+    if (media) {
+      imageUrl = media.getAttribute("url") ?? "";
+    }
+  }
+
+  // DESCRIPTION IMAGE
+  if (!imageUrl && useDescriptionForImage) {
+    const description = getText(item.querySelector("description"));
+    imageUrl = extractImageFromHtml(description);
+  }
+
+  // DATE
+  if (isAtom) {
+
+    const updatedRaw = getText(item.querySelector("updated"));
+
+    if (updatedRaw) {
+      pubDate = formatDate(new Date(updatedRaw));
+    }
+
+  } else if (isSitemap) {
+
+    const publicationDate =
+      getNamespacedText(item, "publication_date");
+
+    if (publicationDate) {
+      pubDate = formatDate(new Date(publicationDate));
+    }
+
+  } else {
+
+    const pubDateRaw = getText(item.querySelector("pubDate"));
+
+    if (pubDateRaw) {
+      pubDate = formatDate(new Date(pubDateRaw));
+    }
+  }
+
+  if (!title && !link) return null;
+
+  return {
+    title,
+    link,
+    imageUrl,
+    pubDate
+  };
+}
+
+async function getFirstItem(
+  feedUrl: string,
+  type: string,
+  useDescriptionForImage = false,
+  defaultImage = ""
+): Promise<FeedItem | null> {
+
+  try {
+
+    const response = await fetchWithTimeout(
+      `https://corsproxy.io/?${encodeURIComponent(feedUrl)}`,
+      { cache: "no-store" }
+    );
+
     if (!response.ok) {
-      if (response.status != 200) {
+
+      if (response.status !== 200) {
         console.warn(`Feed ignorado por error ${response.status}: ${feedUrl}`);
         return null;
       }
+
       throw new Error(`Error HTTP ${response.status}`);
     }
 
     const xmlText = await response.text();
+
     const parser = new DOMParser();
     const xml = parser.parseFromString(xmlText, "application/xml");
 
-    let item: Element | null = isAtom ? xml.querySelector("entry") : xml.querySelector("item");
+    const isAtom = type === "atom";
+    const isSitemap = type === "sitemap";
+
+    let item: Element | null = null;
+
+    if (isAtom) {
+
+      item = xml.querySelector("entry");
+
+    } else if (isSitemap) {
+
+      item = xml.querySelector("url");
+
+    } else {
+
+      item = xml.querySelector("item");
+    }
+
     if (!item) return null;
 
-    const title = item.querySelector("title")?.textContent ?? "";
+    const parsed = parseFeedItem(
+      item,
+      type,
+      useDescriptionForImage,
+      defaultImage
+    );
 
-    let link = isAtom ? item.querySelector("link")?.getAttribute("href") ?? "" : item.querySelector("link")?.textContent ?? "";
+    console.log(JSON.stringify(parsed));
 
-    let imageUrl = "";
-
-    if (isAtom) {
-      const content = item.querySelector("content")?.textContent ?? "";
-      const imgMatch = content.match(/<img[^>]+src=['"]([^'"]+)['"]/);
-      if (imgMatch) imageUrl = imgMatch[1];
-    } else {
-      const media = item.querySelector("media\\:content, enclosure") as Element | null;
-      if (media) imageUrl = media.getAttribute("url") ?? "";
-    }
-
-    
-    if (!imageUrl && useDescriptionForImage) {
-      const description = item.querySelector("description")?.textContent ?? "";
-      const match = description.match(/<img[^>]+src=['"]([^'"]+)['"]/);
-      if (match) imageUrl = match[1];
-    }
-
-   
-    let pubDate = "";
-    if (isAtom) {
-      const updatedRaw = item.querySelector("updated")?.textContent ?? "";
-      if (updatedRaw) pubDate = formatDate(new Date(updatedRaw));
-    } else {
-      const pubDateRaw = item.querySelector("pubDate")?.textContent ?? "";
-      const pubDateObj = pubDateRaw ? new Date(pubDateRaw) : null;
-      pubDate = pubDateObj ? formatDate(pubDateObj) : "";
-    }
-
-    console.log(JSON.stringify( { title, link, imageUrl, pubDate }));
-    return { title, link, imageUrl, pubDate };
+    return parsed;
 
   } catch (error) {
+
     console.error("Error loading feed:", feedUrl, error);
     return null;
   }
 }
-
 
 function formatDate(date: Date): string {
   const pad = (n: number) => n.toString().padStart(2, "0");
@@ -214,7 +324,14 @@ async function loadFeeds() {
 
    
     const items = await Promise.all(
-      feedsWithImages.map(feed =>  getFirstItem(feed.url, feed.type, feed.useDescriptionForImage))  
+      feedsWithImages.map(feed =>
+        getFirstItem(
+          feed.url,
+          feed.type,
+          feed.useDescriptionForImage,
+          feed.defaultImage
+        )
+      )
     );
 
     // Actualizar contenido de cada feed
@@ -598,61 +715,72 @@ async function saveHistorial(useDescriptionForImage = false, maxConcurrent = 5) 
                 const xmlText = await response.text();
                 const parser = new DOMParser();
                 const xml = parser.parseFromString(xmlText, "application/xml");
-                const isAtom = feed.type === "atom"; 
-                const items = isAtom ? Array.from(xml.querySelectorAll("entry")) : Array.from(xml.querySelectorAll("item"));
+                const isAtom = feed.type === "atom";
+                const isSitemap = feed.type === "sitemap";
+
+                let items: Element[];
+
+                if (isAtom) {
+
+                  items = Array.from(xml.querySelectorAll("entry"));
+
+                } else if (isSitemap) {
+
+                  items = Array.from(xml.querySelectorAll("url"));
+
+                } else {
+
+                  items = Array.from(xml.querySelectorAll("item"));
+                }
 
                 for (const item of items) {
-                  const title = item.querySelector("title")?.textContent ?? "";
-
-                  let link = "";
-                  if (isAtom)
-                    link = item.querySelector("link")?.getAttribute("href") ?? "";
-                  else
-                    link = item.querySelector("link")?.textContent ?? "";
-
+                  const parsed = parseFeedItem(
+                    item,
+                    feed.type,
+                    feed.useDescriptionForImage,
+                    feed.defaultImage
+                  );
+                  
+                  if (!parsed) continue;
+                  
+                  const {
+                    title,
+                    link,
+                    imageUrl: parsedImage,
+                    pubDate
+                  } = parsed;
+                  
                   if (!link) continue;
-
                   
-                  let imageUrl = "";
-                  if (isAtom) {
-                    const content = item.querySelector("content")?.textContent ?? "";
-                    const imgMatch = content.match(/<img[^>]+src=['"]([^'"]+)['"]/);
-                    if (imgMatch) imageUrl = imgMatch[1];
-                  } else {
-                    const media = item.querySelector("media\\:content, enclosure") as Element | null;
-                    if (media) imageUrl = media.getAttribute("url") ?? "";
-                  }
-
-                  if (!imageUrl && useDescriptionForImage) {
-                    const description = item.querySelector("description")?.textContent ?? "";
-                    const match = description.match(/<img[^>]+src=['"]([^'"]+)['"]/);
-                    if (match) imageUrl = match[1];
-                  }
-
-                  
-                  let pubDate = "";
-                  if (isAtom) {
-                    const updatedRaw = item.querySelector("updated")?.textContent ?? "";
-                    if (updatedRaw) pubDate = formatDate(new Date(updatedRaw));
-                  } else {
-                    const pubDateRaw = item.querySelector("pubDate")?.textContent ?? "";
-                    const pubDateObj = pubDateRaw ? new Date(pubDateRaw) : null;
-                    pubDate = pubDateObj ? formatDate(pubDateObj) : "";
-                  }
-
                   try {
+                  
                     const urlObj = new URL(link);
                     const host = urlObj.host;
-
+                  
                     const exists = storedData.some(i => i.link === link);
+                  
                     if (exists) continue;
-
-                    
-                    const esValida = await validarImagen(imageUrl);
-                    if (!esValida) imageUrl = feed.defaultImage || "";
-
-                    storedData.push({ host, title, link, imageUrl, pubDate, type: feed.type, fromDescription: feed.useDescriptionForImage });
+                  
+                    let finalImage = parsedImage;
+                  
+                    const esValida = await validarImagen(finalImage);
+                  
+                    if (!esValida) {
+                      finalImage = feed.defaultImage || "";
+                    }
+                  
+                    storedData.push({
+                      host,
+                      title,
+                      link,
+                      imageUrl: finalImage,
+                      pubDate,
+                      type: feed.type,
+                      fromDescription: feed.useDescriptionForImage
+                    });
+                  
                   } catch (err) {
+                  
                     console.error("Error saving item in localStorage:", err);
                   }
                 }
