@@ -1,32 +1,10 @@
 Menéame,https://www.meneame.net/rss,https://enterum.github.io/aggrhome/img/meneame.png,rss,true,AGR,ES,es
-
-KillBait,https://es.killbait.com/news-sitemap-es-ES.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,ES,es
-KillBait,https://es.killbait.com/news-sitemap-es-MX.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,MX,es
-KillBait,https://es.killbait.com/news-sitemap-es-CO.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,CO,es
-KillBait,https://es.killbait.com/news-sitemap-es-AR.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,AR,es
-KillBait,https://es.killbait.com/news-sitemap-es-PE.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,PE,es
-KillBait,https://es.killbait.com/news-sitemap-es-VE.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,VE,es
-KillBait,https://es.killbait.com/news-sitemap-es-CL.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,CL,es
-KillBait,https://es.killbait.com/news-sitemap-es-EC.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,EC,es
-KillBait,https://es.killbait.com/news-sitemap-es-GT.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,GT,es
-KillBait,https://es.killbait.com/news-sitemap-es-CU.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,CU,es
-
-KillBait,https://en.killbait.com/news-sitemap-en-US.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,US,en
-KillBait,https://en.killbait.com/news-sitemap-en-GB.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,GB,en
-KillBait,https://en.killbait.com/news-sitemap-en-NG.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,NG,en
-KillBait,https://en.killbait.com/news-sitemap-en-PK.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,PK,en
-KillBait,https://en.killbait.com/news-sitemap-en-PH.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,PH,en
-KillBait,https://en.killbait.com/news-sitemap-en-TZ.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,TZ,en
-KillBait,https://en.killbait.com/news-sitemap-en-ZA.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,ZA,en
-KillBait,https://en.killbait.com/news-sitemap-en-KE.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,KE,en
-KillBait,https://en.killbait.com/news-sitemap-en-CA.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,CA,en
-KillBait,https://en.killbait.com/news-sitemap-en-IN.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,IN,en
-KillBait,https://en.killbait.com/news-sitemap-en-AU.xml,https://enterum.github.io/aggrhome/img/killbait.png,sitemap,false,AGR,AU,en
-
+KillBait,https://killbaitnews.github.io/rssfeeds/es.rss,https://enterum.github.io/aggrhome/img/killbait.png,rss,false,AGR,ES,es
 Tardigram,https://tardigram.com/rss,https://enterum.github.io/aggrhome/img/tardigram.webp,rss,false,AGR,ES,es
 Mediatize,https://www.mediatize.info/rss,https://enterum.github.io/aggrhome/img/mediatize.png,rss,true,AGR,ES,es
 Renegados,https://repostea.renegados.es/rss/published,https://enterum.github.io/aggrhome/img/renegados.jpg,rss,false,AGR,ES,es
 Limonatic,https://limonatic.com/rss/portada.xml,https://enterum.github.io/aggrhome/img/limonatic.png,rss,false,AGR,ES,es
+KillBait,https://killbaitnews.github.io/rssfeeds/en.rss,https://enterum.github.io/aggrhome/img/killbait.png,rss,false,AGR,ES,en
 Yups,https://yups.io/rss,https://yups.io/mbin_logo.svg,rss,false,AGR,ES,en
 
 El País,https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/ultimas-noticias/portada,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiFrjQs1yATE2Dmr7oWN6GSqsSFv1Av0_9aA&s,rss,false,PON,ES,es

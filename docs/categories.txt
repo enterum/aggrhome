@@ -1,26 +1,6 @@
-
 AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|ES|España|es|Español
-AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|MX|México|es|Español
-AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|CO|Colombia|es|Español
-AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|AR|Argentina|es|Español
-AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|PE|Perú|es|Español
-AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|VE|Venezuela|es|Español
-AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|CL|Chile|es|Español
-AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|EC|Ecuador|es|Español
-AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|GT|Guatemala|es|Español
-AGR|Agregadores de noticias|Los mejores agregadores de noticias en español|Vota cada agregador pensando en la calidad de las noticias que ofrecen: El número de votos determinará el orden en el listado.|CU|Cuba|es|Español
-
 AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|US|United States|en|English
-AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|GB|United Kingdom|en|English
-AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|NG|Nigeria|en|English
-AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|PK|Pakistan|en|English
-AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|PH|Philippines|en|English
-AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|TZ|Tanzania|en|English
-AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|ZA|South Africa|en|English
-AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|KE|Kenya|en|English
-AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|CA|Canada|en|English
-AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|IN|India|en|English
-AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|AU|Australia|en|English
+AGR|News Aggregators|Best news aggregators|Vote for each aggregator based on the quality of the news they provide: The number of votes will determine the order in the list.|UK|United Kingdom|en|English
 
 PON|Prensa online|Principales diarios online en español|Vota cada medio pensando en la calidad y relevancia de sus noticias: El número de votos determinará el orden en el listado.|ES|España|es|Español
 PON|Online Press|Main online newspapers|Vote for each outlet based on the quality and relevance of their news: The number of votes will determine the order in the list.|US|United States|en|English
